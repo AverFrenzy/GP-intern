@@ -1,0 +1,17 @@
+.pizza-circle {
+    position: relative;
+    border-radius: 50%;
+    width: 500px;
+    height: 500px;
+    background-color: burlywood;
+    border: 15px solid #ffa600;
+}
+
+.pizza-cut {
+    position: absolute;
+    right: 50%;
+    height: 106.5%;
+    top: -15px;
+    width: 2px;
+    background-color: #070707;
+}
