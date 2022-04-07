@@ -16,9 +16,7 @@ const PIZZA_TYPES = {
 
 const PartyContext = createContext();
 
-export const usePartyContext = () => {
-  return useContext(PartyContext);
-};
+export const usePartyContext = () => useContext(PartyContext);
 
 export const PartyContextProvider = ({ children }) => {
   const [partyInfo, setPartyInfo] = useState([]);
@@ -94,9 +92,8 @@ export const PartyContextProvider = ({ children }) => {
     return PIZZA_TYPES.MEAT;
   };
 
-  const calculateExchangedPrice = (currency, price, currencyInfo) => {
-    return currency === 'BYN' ? price : price * currencyInfo[currency];
-  };
+  const calculateExchangedPrice = (currency, price, currencyInfo) =>
+    currency === 'BYN' ? price : price * currencyInfo[currency];
 
   const calculateTotalOrder = (pizzaInfo, colaInfo, currencyInfo) => {
     const pizzaCurrencyType = pizzaInfo?.price?.split(' ').pop();
