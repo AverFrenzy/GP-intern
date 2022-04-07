@@ -22,11 +22,18 @@ export const usePartyContext = () => {
 
 export const PartyContextProvider = ({ children }) => {
   const [partyInfo, setPartyInfo] = useState([]);
+  const [eatPizza, setEatPizza] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [moneyToCollect, setMoneyToCollect] = useState(0);
   const [orderAmount, setOrderAmount] = useState(0);
   const [collectedMoney, setCollectedMoney] = useState(0);
   const [percentPaid, setPercentPaid] = useState(0);
+  const [percentFeedback, setPercentFeedback] = useState(0);
+
+  const countPercentFeedback = (countFeedback) => {
+    const percent = (countFeedback * 100) / eatPizza.length;
+    setPercentFeedback(+percent.toFixed(0));
+  };
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -65,6 +72,8 @@ export const PartyContextProvider = ({ children }) => {
         };
       });
       setPartyInfo(totalPartyInfo);
+      const eatPizza = totalPartyInfo.filter((item) => item.isEatsPizza);
+      setEatPizza(eatPizza);
     } catch (err) {
       console.log(err);
     } finally {
@@ -145,6 +154,8 @@ export const PartyContextProvider = ({ children }) => {
     fetchData,
     pay,
     percentPaid,
+    countPercentFeedback,
+    percentFeedback,
   };
 
   return <PartyContext.Provider value={value}>{children}</PartyContext.Provider>;

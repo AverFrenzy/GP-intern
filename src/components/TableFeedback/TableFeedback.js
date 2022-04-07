@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Row } from './Row';
 import { DialogFeedback } from './DialogFeedback';
-import { TableTitle, TableList } from './Table.styles';
 import { usePartyContext } from '../contexts/PartyContext';
+import { TableList } from './Table.styles';
 
 export const TableFeedback = () => {
-  const { partyInfo } = usePartyContext();
+  const { partyInfo, countPercentFeedback } = usePartyContext();
 
   const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState();
@@ -13,6 +13,11 @@ export const TableFeedback = () => {
   const [isLocal, setIsLocal] = useState(false);
   const [comment, setComment] = useState('');
   const [phoneNumb, setPhoneNumb] = useState('');
+  const [countFeedback, setCountFeedback] = useState(0);
+
+  useEffect(() => {
+    countPercentFeedback(countFeedback);
+  }, [countFeedback, countPercentFeedback]);
 
   const getStars = (e) => {
     if (e.target.closest('svg[id]') && !isLocal) {
@@ -65,6 +70,7 @@ export const TableFeedback = () => {
         comment={comment}
         phoneNumb={phoneNumb}
         display={isLocal ? 'none' : false}
+        setCountFeedback={setCountFeedback}
       />
     </>
   );

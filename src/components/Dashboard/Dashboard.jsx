@@ -7,7 +7,7 @@ import { usePartyContext } from '../contexts/PartyContext';
 import './index.css';
 
 export const Dashboard = () => {
-  const { percentPaid } = usePartyContext();
+  const { percentPaid, percentFeedback } = usePartyContext();
 
   return (
     <div className="dashboard-container">
@@ -25,7 +25,7 @@ export const Dashboard = () => {
           <PercentWidget value={percentPaid} />
         </div>
         <div className="dashboard-statistic-item">
-          <PercentWidget value={percentPaid} />
+          <PercentWidget value={percentFeedback} />
         </div>
       </div>
     </div>

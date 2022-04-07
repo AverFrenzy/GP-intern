@@ -8,6 +8,7 @@ const App = () => {
 
   useEffect(() => {
     fetchData();
+    localStorage.clear();
   }, []);
   return (
     <div className="container">

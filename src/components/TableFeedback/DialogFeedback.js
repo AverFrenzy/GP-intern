@@ -28,6 +28,7 @@ export const DialogFeedback = ({
   comment,
   phoneNumb,
   display,
+  setCountFeedback,
 }) => {
   const { btnDelete, btnSave } = MESSAGES.dialogFeedback.buttons;
   const starLength = [0, 1, 2, 3, 4];
@@ -56,11 +57,15 @@ export const DialogFeedback = ({
     localStorage.setItem(`${nameId}`, JSON.stringify(data));
     reset();
     handleClose();
+    setCountFeedback((prev) => prev + 1);
   };
 
-  const deleteFeddback = () => {
-    isLocal && localStorage.removeItem(`${nameId}`);
-    isLocal && handleClose();
+  const deleteFeedback = (e) => {
+    if (e.target.name === btnDelete) {
+      isLocal && localStorage.removeItem(`${nameId}`);
+      isLocal && handleClose();
+      setCountFeedback((prev) => prev - 1);
+    }
   };
 
   return (
@@ -150,7 +155,8 @@ export const DialogFeedback = ({
             variant="contained"
             color={isLocal ? 'error' : 'success'}
             icon={isLocal ? <DeleteIcon /> : <SendIcon />}
-            onClick={deleteFeddback}
+            onClick={deleteFeedback}
+            name={isLocal ? btnDelete : btnSave}
           >
             {isLocal ? btnDelete : btnSave}
           </Button>
