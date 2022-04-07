@@ -10,7 +10,7 @@ export const PercentWidget = React.memo(function MyComponent({ value }) {
       <CircularProgress
         variant="determinate"
         value={100}
-        size="140px"
+        size="270px"
         thickness={7}
         sx={{ position: 'absolute', color: '#d8d8d8' }}
       />
@@ -18,7 +18,7 @@ export const PercentWidget = React.memo(function MyComponent({ value }) {
         variant="determinate"
         value={value}
         color={colorValue}
-        size="140px"
+        size="270px"
         thickness={7}
       />
       <PercentBoxTitle>

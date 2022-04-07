@@ -10,9 +10,8 @@ export const TableTitle = styled.h2`
 
 export const TableList = styled.ul`
   width: 100%;
-  max-width: 360px;
-  margin: 20px auto;
-  padding: 0 25px;
+  margin: 10px auto;
+  padding: 0 85px;
   border: 1px solid #616161;
   border-radius: 2px;
 `;
