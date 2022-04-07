@@ -53,7 +53,7 @@ export const TableFeedback = () => {
             color={partyInfo[index].isVegan && partyInfo[index].isEatsPizza ? 'green' : 'grey.800'}
             name={name}
             disabled={isEatsPizza ? false : true}
-            key={index}
+            key={name}
             id={index}
             visibility={isEatsPizza && !localStorage.getItem(`${index}`) ? 'hidden' : false}
           />
