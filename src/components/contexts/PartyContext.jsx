@@ -26,6 +26,8 @@ export const PartyContextProvider = ({ children }) => {
   const [moneyToCollect, setMoneyToCollect] = useState(0);
   const [orderAmount, setOrderAmount] = useState(0);
   const [collectedMoney, setCollectedMoney] = useState(0);
+  const [percentPaid, setPercentPaid] = useState(0);
+
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -79,10 +81,10 @@ export const PartyContextProvider = ({ children }) => {
       setIsLoading(false);
     }
   };
+
   const countPercent = (collectedMoney) => {
     const percentPaid = (+collectedMoney / +orderAmount) * 100;
-    console.log(percentPaid.toFixed(0));
-    return percentPaid;
+    setPercentPaid(+percentPaid.toFixed(0))
   };
 
   const choosePizza = (vegansPercent) => {
@@ -156,6 +158,7 @@ export const PartyContextProvider = ({ children }) => {
     choosePizza,
     fetchData,
     pay,
+    percentPaid,
   };
 
   return (

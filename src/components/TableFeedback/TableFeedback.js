@@ -41,7 +41,6 @@ export const TableFeedback = () => {
 
   return (
     <>
-      <TableTitle>Feedback list</TableTitle>
       <TableList>
         {partyInfo.map(({ name, isEatsPizza }, index) => (
           <Row
