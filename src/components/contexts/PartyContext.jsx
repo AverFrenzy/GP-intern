@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState } from 'react';
 
 import {
   getColaInfo,
@@ -6,19 +6,17 @@ import {
   getDietsInfo,
   getParticipantsInfo,
   getPizzaInfo,
-} from "../../services/pizzaService";
+} from '../../services/pizzaService';
 
 const PIZZA_TYPES = {
-  CHEESE: "cheese",
-  MEAT: "meat",
-  VEGAN: "vegan",
+  CHEESE: 'cheese',
+  MEAT: 'meat',
+  VEGAN: 'vegan',
 };
 
 const PartyContext = createContext();
 
-export const usePartyContext = () => {
-  return useContext(PartyContext);
-};
+export const usePartyContext = () => useContext(PartyContext);
 
 export const PartyContextProvider = ({ children }) => {
   const [partyInfo, setPartyInfo] = useState([]);
@@ -27,7 +25,6 @@ export const PartyContextProvider = ({ children }) => {
   const [orderAmount, setOrderAmount] = useState(0);
   const [collectedMoney, setCollectedMoney] = useState(0);
   const [percentPaid, setPercentPaid] = useState(0);
-
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -84,7 +81,7 @@ export const PartyContextProvider = ({ children }) => {
 
   const countPercent = (collectedMoney) => {
     const percentPaid = (+collectedMoney / +orderAmount) * 100;
-    setPercentPaid(+percentPaid.toFixed(0))
+    setPercentPaid(+percentPaid.toFixed(0));
   };
 
   const choosePizza = (vegansPercent) => {
@@ -95,15 +92,13 @@ export const PartyContextProvider = ({ children }) => {
     return PIZZA_TYPES.MEAT;
   };
 
-  const calculateExchangedPrice = (currency, price, currencyInfo) => {
-    return currency === "BYN" ? price : price * currencyInfo[currency];
-  };
+  const calculateExchangedPrice = (currency, price, currencyInfo) => currency === 'BYN' ? price : price * currencyInfo[currency];
 
   const calculateTotalOrder = (pizzaInfo, colaInfo, currencyInfo) => {
-    const pizzaCurrencyType = pizzaInfo?.price?.split(" ").pop();
-    const colaCurrencyType = colaInfo?.price?.split(" ").pop();
-    const pizzaPrice = +pizzaInfo?.price?.split(" ").shift();
-    const colaPrice = +colaInfo?.price?.split(" ").shift();
+    const pizzaCurrencyType = pizzaInfo?.price?.split(' ').pop();
+    const colaCurrencyType = colaInfo?.price?.split(' ').pop();
+    const pizzaPrice = +pizzaInfo?.price?.split(' ').shift();
+    const colaPrice = +colaInfo?.price?.split(' ').shift();
 
     const pizzaPriceExchanged = calculateExchangedPrice(
       pizzaCurrencyType,
@@ -162,6 +157,6 @@ export const PartyContextProvider = ({ children }) => {
   };
 
   return (
-    <PartyContext.Provider value={value}>{children}</PartyContext.Provider>
+    <PartyContext.Provider value={ value }>{ children }</PartyContext.Provider>
   );
 };
