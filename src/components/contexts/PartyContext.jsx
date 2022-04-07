@@ -80,7 +80,7 @@ export const PartyContextProvider = ({ children }) => {
   };
 
   const countPercent = (collectedMoney) => {
-    const percentPaid = (+collectedMoney / +orderAmount) * 100;
+    const percentPaid = (collectedMoney / orderAmount) * 100;
     setPercentPaid(+percentPaid.toFixed(0));
   };
 
