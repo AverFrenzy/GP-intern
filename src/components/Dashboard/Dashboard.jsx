@@ -3,9 +3,12 @@ import { Table } from '../Table';
 import { Pizza } from '../Pizza';
 import { TableFeedback } from '../TableFeedback';
 import { PercentWidget } from '../PercentWidget';
+import { usePartyContext } from '../contexts/PartyContext';
 import './index.css';
 
 export const Dashboard = () => {
+  const { percentPaid } = usePartyContext();
+
   return (
     <div className="dashboard-container">
       <div className="dashboard-item">
@@ -19,10 +22,10 @@ export const Dashboard = () => {
           <Pizza />
         </div>
         <div className="dashboard-statistic-item">
-          <PercentWidget value={65} />
+          <PercentWidget value={percentPaid} />
         </div>
         <div className="dashboard-statistic-item">
-          <PercentWidget value={65} />
+          <PercentWidget value={percentPaid} />
         </div>
       </div>
     </div>
