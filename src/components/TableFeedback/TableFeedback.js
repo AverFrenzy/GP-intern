@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { Row } from './Row';
 import { DialogFeedback } from './DialogFeedback';
-import { Box, Button } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { TableTitle, TableList } from './Table.styles';
 import { usePartyContext } from '../contexts/PartyContext';
 
@@ -57,11 +55,6 @@ export const TableFeedback = () => {
           />
         ))}
       </TableList>
-      {/* <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Button color="error" variant="contained" onClick={clearLocalStorage} icon={<DeleteIcon />}>
-          Clear app
-        </Button>
-      </Box> */}
       <DialogFeedback
         isOpen={isOpen}
         setIsOpen={setIsOpen}

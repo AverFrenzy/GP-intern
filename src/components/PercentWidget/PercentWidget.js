@@ -1,7 +1,10 @@
+import React from "react";
 import { CircularProgress } from '@mui/material';
 import { PercentBox, PercentBoxTitle, PercentTitle } from './PercentWidget.styles';
 
-export const PercentWidget = ({ value }) => {
+export const PercentWidget = React.memo(function MyComponent({ value }) {
+  const colorValue = value < 45 ? 'error' : value < 65 && value > 44 ? 'secondary' : 'success';
+
   return (
     <PercentBox>
       <CircularProgress
@@ -14,7 +17,7 @@ export const PercentWidget = ({ value }) => {
       <CircularProgress
         variant="determinate"
         value={value}
-        color={value < 45 ? 'error' : value < 65 && value > 44 ? 'secondary' : 'success'}
+        color={colorValue}
         size="140px"
         thickness={7}
       />
@@ -23,4 +26,4 @@ export const PercentWidget = ({ value }) => {
       </PercentBoxTitle>
     </PercentBox>
   );
-};
+});
