@@ -61,6 +61,11 @@ export const PartyContextProvider = ({ children }) => {
       setIsLoading(false);
     }
   };
+  const countPercent = (collectedMoney) => {
+    const percentPaid = +collectedMoney/+orderAmount * 100
+    console.log(percentPaid.toFixed(0));
+    return percentPaid
+  };
 
   const choosePizza = (vegansPercent) => {
     if (vegansPercent > 51) {
@@ -100,10 +105,12 @@ export const PartyContextProvider = ({ children }) => {
     const newPartyInfo = [...partyInfo];
     newPartyInfo.forEach((person) => {
       if (person.name === participantName) {
+        const updatedMoneySum = collectedMoney + person.shareToPay
         person.isPaid = true;
-        setCollectedMoney(collectedMoney + person.shareToPay);
+        setCollectedMoney(updatedMoneySum);
         setMoneyToCollect(moneyToCollect - person.shareToPay);
         person.shareToPay = 0;
+        countPercent(updatedMoneySum)
       }
     });
     setPartyInfo(newPartyInfo);
@@ -117,7 +124,8 @@ export const PartyContextProvider = ({ children }) => {
     partyInfo,
     choosePizza,
     fetchData,
-    pay
+    pay,
+    countPercent
   };
 
   return (

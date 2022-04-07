@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Table, Loader, Pizza } from './components';
 import { usePartyContext } from './components/contexts/PartyContext';
+import Dashboard from './components/Dashboard/Dashboard';
 
 
 const App = () => {
   const { isLoading, fetchData, partyInfo } = usePartyContext();
 
+
+  useEffect(() => {
+    fetchData()
+  },[])
   return (
     <div className='container'>
-      <button onClick={ fetchData } className='load-button' disabled={ isLoading }>
-        { isLoading ? <Loader /> : 'Load' }
-      </button>
-      { (!!partyInfo.length && !isLoading) && <Pizza /> }
-      { (!!partyInfo.length && !isLoading) && <Table /> }
+      {isLoading && <Loader/>}
+      { (!!partyInfo.length && !isLoading) && <Dashboard /> }
     </div>
   );
 };
