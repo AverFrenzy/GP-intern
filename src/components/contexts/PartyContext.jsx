@@ -20,11 +20,18 @@ export const usePartyContext = () => useContext(PartyContext);
 
 export const PartyContextProvider = ({ children }) => {
   const [partyInfo, setPartyInfo] = useState([]);
+  const [eatPizza, setEatPizza] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [moneyToCollect, setMoneyToCollect] = useState(0);
   const [orderAmount, setOrderAmount] = useState(0);
   const [collectedMoney, setCollectedMoney] = useState(0);
   const [percentPaid, setPercentPaid] = useState(0);
+  const [percentFeedback, setPercentFeedback] = useState(0);
+
+  const countPercentFeedback = (countFeedback) => {
+    const percent = (countFeedback * 100) / eatPizza.length;
+    setPercentFeedback(+percent.toFixed(0));
+  };
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -32,28 +39,19 @@ export const PartyContextProvider = ({ children }) => {
 
     try {
       const participantsData = await getParticipantsInfo();
-      const dietData = await getDietsInfo(
-        participantsData.party.map((person) => person.name)
-      );
+      const dietData = await getDietsInfo(participantsData.party.map((person) => person.name));
       const vegansList = dietData.diet
         .filter((person) => person.isVegan)
         .map((person) => person.name);
-      const pizzaEaters = participantsData.party.filter(
-        (person) => person.eatsPizza
-      );
-      const vegansPercent =
-        (vegansList.length / participantsData.party.length) * 100;
+      const pizzaEaters = participantsData.party.filter((person) => person.eatsPizza);
+      const vegansPercent = (vegansList.length / participantsData.party.length) * 100;
       const typeOfPizza = choosePizza(vegansPercent);
       const orderData = await Promise.all([
         getPizzaInfo(typeOfPizza, pizzaEaters.length),
         getColaInfo(participantsData.party.length),
         getCurrencyInfo(),
       ]);
-      const orderPrices = calculateTotalOrder(
-        orderData[0],
-        orderData[1],
-        orderData[2]
-      );
+      const orderPrices = calculateTotalOrder(orderData[0], orderData[1], orderData[2]);
       const pricesPerGuest = calculateAmountPerGuest(
         orderPrices.pizzaPrice,
         orderPrices.colaPrice,
@@ -72,6 +70,8 @@ export const PartyContextProvider = ({ children }) => {
         };
       });
       setPartyInfo(totalPartyInfo);
+      const eatPizza = totalPartyInfo.filter((item) => item.isEatsPizza);
+      setEatPizza(eatPizza);
     } catch (err) {
       console.log(err);
     } finally {
@@ -92,7 +92,8 @@ export const PartyContextProvider = ({ children }) => {
     return PIZZA_TYPES.MEAT;
   };
 
-  const calculateExchangedPrice = (currency, price, currencyInfo) => currency === 'BYN' ? price : price * currencyInfo[currency];
+  const calculateExchangedPrice = (currency, price, currencyInfo) =>
+    currency === 'BYN' ? price : price * currencyInfo[currency];
 
   const calculateTotalOrder = (pizzaInfo, colaInfo, currencyInfo) => {
     const pizzaCurrencyType = pizzaInfo?.price?.split(' ').pop();
@@ -105,11 +106,7 @@ export const PartyContextProvider = ({ children }) => {
       pizzaPrice,
       currencyInfo
     );
-    const colaPriceExchanged = calculateExchangedPrice(
-      colaCurrencyType,
-      colaPrice,
-      currencyInfo
-    );
+    const colaPriceExchanged = calculateExchangedPrice(colaCurrencyType, colaPrice, currencyInfo);
     setMoneyToCollect(colaPriceExchanged + pizzaPriceExchanged);
     setOrderAmount(colaPriceExchanged + pizzaPriceExchanged);
     return { pizzaPrice: pizzaPriceExchanged, colaPrice: colaPriceExchanged };
@@ -154,9 +151,9 @@ export const PartyContextProvider = ({ children }) => {
     fetchData,
     pay,
     percentPaid,
+    countPercentFeedback,
+    percentFeedback,
   };
 
-  return (
-    <PartyContext.Provider value={ value }>{ children }</PartyContext.Provider>
-  );
+  return <PartyContext.Provider value={value}>{children}</PartyContext.Provider>;
 };

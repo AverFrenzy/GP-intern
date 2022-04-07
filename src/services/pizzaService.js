@@ -1,4 +1,4 @@
-const API_BASE = 'https://gp-js-test.herokuapp.com/pizza/'
+const API_BASE = 'https://gp-js-test.herokuapp.com/pizza/';
 
 const getInfo = async (url) => {
   const response = await fetch(`${API_BASE}${url}`);
@@ -6,12 +6,15 @@ const getInfo = async (url) => {
   return data;
 };
 
-export const getParticipantsInfo = async () => getInfo('guests')
+export const getParticipantsInfo = async () => getInfo('guests');
 
-export const getDietsInfo  = async (namesOfParticipants) => getInfo(`world-diets-book/${namesOfParticipants}`)
+export const getDietsInfo = async (namesOfParticipants) =>
+  getInfo(`world-diets-book/${namesOfParticipants}`);
 
-export const getCurrencyInfo  = async () => getInfo('currency')
+export const getCurrencyInfo = async () => getInfo('currency');
 
-export const getPizzaInfo = async(typeOfPizza,pizzaEatersNumber) => getInfo(`order/${typeOfPizza}/${pizzaEatersNumber}`)
+export const getPizzaInfo = async (typeOfPizza, pizzaEatersNumber) =>
+  getInfo(`order/${typeOfPizza}/${pizzaEatersNumber}`);
 
-export const getColaInfo = async(participantsNumber) => getInfo(`order-cola/${participantsNumber}`)
+export const getColaInfo = async (participantsNumber) =>
+  getInfo(`order-cola/${participantsNumber}`);

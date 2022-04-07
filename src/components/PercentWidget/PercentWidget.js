@@ -1,9 +1,14 @@
-import React from "react";
+import React from 'react';
 import { CircularProgress } from '@mui/material';
 import { PercentBox, PercentBoxTitle, PercentTitle } from './PercentWidget.styles';
 
 export const PercentWidget = React.memo(function MyComponent({ value }) {
-  const colorValue = value < 45 ? 'error' : value < 65 && value > 44 ? 'secondary' : 'success';
+  let colorValue = 'success';
+  if (value < 45) {
+    colorValue = 'error';
+  } else if (value < 65 && value > 44) {
+    colorValue = 'secondary';
+  }
 
   return (
     <PercentBox>

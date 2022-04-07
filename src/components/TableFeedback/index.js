@@ -1,1 +1,1 @@
-export * from "./TableFeedback";
+export * from './TableFeedback';

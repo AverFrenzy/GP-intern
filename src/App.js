@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
-import { Loader } from './components';
+import { useEffect } from 'react';
+import { Loader } from './components/Loader';
 import { usePartyContext } from './components/contexts/PartyContext';
-import Dashboard from './components/Dashboard/Dashboard';
-
+import { Dashboard } from './components/Dashboard';
 
 const App = () => {
   const { isLoading, fetchData, partyInfo } = usePartyContext();
 
   useEffect(() => {
-    fetchData()
-  },[])
+    fetchData();
+    localStorage.clear();
+  }, []);
   return (
-    <div className='container'>
-      {isLoading && <Loader/>}
-      { (!!partyInfo.length && !isLoading) && <Dashboard /> }
+    <div className="container">
+      {isLoading && <Loader />}
+      {!!partyInfo.length && !isLoading && <Dashboard />}
     </div>
   );
 };

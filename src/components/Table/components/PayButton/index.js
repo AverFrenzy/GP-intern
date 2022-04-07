@@ -1,1 +1,1 @@
-export * from './PayButton'
+export * from './PayButton';

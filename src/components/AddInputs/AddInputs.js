@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Typography, IconButton } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { AddInpBlock, InputsList } from './AddInputs.styles';
 import { Input } from '../Input';
+import { AddInpBlock, InputsList } from './AddInputs.styles';
 
 export const AddInputs = () => {
   const [inputNames, setInputNames] = useState([]);
