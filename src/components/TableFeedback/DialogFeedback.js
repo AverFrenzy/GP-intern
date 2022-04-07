@@ -15,6 +15,7 @@ import StarIcon from '@mui/icons-material/Star';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { AddInputs } from '../AddInputs';
 import { Feedback } from '../Feedback';
+import { MESSAGES } from '../constants';
 
 export const DialogFeedback = ({
   isOpen,
@@ -28,6 +29,7 @@ export const DialogFeedback = ({
   phoneNumb,
   display,
 }) => {
+  const { btnDelete, btnSave } = MESSAGES.dialogFeedback.buttons;
   const starLength = [0, 1, 2, 3, 4];
   const {
     register,
@@ -150,7 +152,7 @@ export const DialogFeedback = ({
             icon={isLocal ? <DeleteIcon /> : <SendIcon />}
             onClick={deleteFeddback}
           >
-            {isLocal ? 'Delete' : 'Save'}
+            {isLocal ? btnDelete : btnSave}
           </Button>
         </DialogActions>
       </form>

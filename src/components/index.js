@@ -1,3 +1,1 @@
-export * from './Pizza'
-export * from './Loader'
-export * from './Table'
+export * from './Table';

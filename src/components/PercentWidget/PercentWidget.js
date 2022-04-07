@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { CircularProgress } from '@mui/material';
 import { PercentBox, PercentBoxTitle, PercentTitle } from './PercentWidget.styles';
 

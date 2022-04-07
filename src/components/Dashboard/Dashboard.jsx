@@ -1,34 +1,30 @@
 import React from 'react';
-
-import './index.css';
 import { Table } from '../Table';
 import { Pizza } from '../Pizza';
+import { TableFeedback } from '../TableFeedback';
+import { PercentWidget } from '../PercentWidget';
+import './index.css';
 
-
-const Dashboard = () => {
+export const Dashboard = () => {
   return (
-    <>
-      <div className='dashboard-container'>
-        <div className='dashboard-item'>
-          <Table />
+    <div className="dashboard-container">
+      <div className="dashboard-item">
+        <Table />
+      </div>
+      <div className="dashboard-item">
+        <TableFeedback />
+      </div>
+      <div className="dashboard-item">
+        <div className="dashboard-statistic-item">
+          <Pizza />
         </div>
-        <div className='dashboard-item'>
-          {/*//*/ }
+        <div className="dashboard-statistic-item">
+          <PercentWidget value={65} />
         </div>
-        <div className='dashboard-item'>
-          <div className='dashboard-statistic-item'>
-            <Pizza />
-          </div>
-          <div className='dashboard-statistic-item'>
-            <Pizza />
-          </div>
-          <div className='dashboard-statistic-item'>
-            <Pizza />
-          </div>
+        <div className="dashboard-statistic-item">
+          <PercentWidget value={65} />
         </div>
       </div>
-    </>
+    </div>
   );
 };
-
-export default Dashboard;
