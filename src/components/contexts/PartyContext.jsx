@@ -65,9 +65,13 @@ export const PartyContextProvider = ({ children }) => {
           name: person.name,
           isEatsPizza: person.eatsPizza,
           isPaid: false,
+          isFeedback: false,
           isVegan: vegansList.includes(person.name),
           isNotVegan: !vegansList.includes(person.name),
           shareToPay: person.eatsPizza
+            ? pricesPerGuest.amountPerGuestPizzaAndCola
+            : pricesPerGuest.amountPerGuestCola,
+          toPay: person.eatsPizza
             ? pricesPerGuest.amountPerGuestPizzaAndCola
             : pricesPerGuest.amountPerGuestCola,
         };
@@ -157,6 +161,16 @@ export const PartyContextProvider = ({ children }) => {
     setPartyInfo(newPartyInfo);
   };
 
+  const handleFeedback = (participantName, data) => {
+    for (let i = 0; i < partyInfo.length; i++) {
+      if (partyInfo[i].name === participantName) {
+        partyInfo[i].isFeedback = !partyInfo[i].isFeedback;
+        partyInfo[i].feedbackInf = data ? data : {};
+        break;
+      }
+    }
+  };
+
   const value = {
     isLoading,
     moneyToCollect,
@@ -172,6 +186,7 @@ export const PartyContextProvider = ({ children }) => {
     filterList,
     billListInfo,
     feedbackListInfo,
+    handleFeedback,
   };
 
   return <PartyContext.Provider value={value}>{children}</PartyContext.Provider>;

@@ -16,6 +16,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { AddInputs } from '../AddInputs';
 import { Feedback } from '../Feedback';
 import { MESSAGES } from '../constants';
+import { usePartyContext } from '../contexts/PartyContext';
 
 export const DialogFeedback = ({
   isOpen,
@@ -30,6 +31,7 @@ export const DialogFeedback = ({
   display,
   setCountFeedback,
 }) => {
+  const { handleFeedback } = usePartyContext();
   const { btnDelete, btnSave } = MESSAGES.dialogFeedback.buttons;
   const starLength = [0, 1, 2, 3, 4];
   const {
@@ -58,6 +60,7 @@ export const DialogFeedback = ({
     reset();
     handleClose();
     setCountFeedback((prev) => prev + 1);
+    handleFeedback(name, data);
   };
 
   const deleteFeedback = (e) => {
@@ -65,6 +68,7 @@ export const DialogFeedback = ({
       isLocal && localStorage.removeItem(`${nameId}`);
       isLocal && handleClose();
       setCountFeedback((prev) => prev - 1);
+      handleFeedback(name);
     }
   };
 
@@ -75,7 +79,7 @@ export const DialogFeedback = ({
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
+            justifyContent: 'start',
             alignItems: 'center',
             padding: '20px 0',
             width: '400px',
