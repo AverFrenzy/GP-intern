@@ -4,10 +4,20 @@ import { usePartyContext } from '../contexts/PartyContext';
 
 import './index.css';
 
-const ListFilter = ({ options, listName }) => {
-  const { filterList } = usePartyContext();
+const ListFilter = ({ options, setFunc }) => {
+  const { partyInfo } = usePartyContext();
+
+  const filterList = (value) => {
+    if (value === 'defaultValue') {
+      setFunc(partyInfo);
+    } else {
+      const filteredInfo = partyInfo.filter((item) => item[value]);
+      setFunc(filteredInfo);
+    }
+  };
+
   return (
-    <select className="filter-list" onChange={(event) => filterList(event.target.value, listName)}>
+    <select className="filter-list" onChange={(event) => filterList(event.target.value)}>
       {/* prettier-ignore */}
       <option className="filter-list-item" defaultValue value={'defaultValue'}>ALL</option>
       {options.map((option, index) => (

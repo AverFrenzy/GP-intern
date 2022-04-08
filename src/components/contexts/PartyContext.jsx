@@ -135,17 +135,6 @@ export const PartyContextProvider = ({ children }) => {
     };
   };
 
-  const filterList = (value, listName) => {
-    if (value === 'defaultValue') {
-      listName === 'billList' ? setBillListInfo(partyInfo) : null;
-      listName === 'feedbackList' ? setFeedbackListInfo(partyInfo) : null;
-    } else {
-      const filteredInfo = [...partyInfo].filter((item) => item[value]);
-      listName === 'billList' ? setBillListInfo(filteredInfo) : null;
-      listName === 'feedbackList' ? setFeedbackListInfo(filteredInfo) : null;
-    }
-  };
-
   const pay = (participantName) => {
     const newPartyInfo = [...partyInfo];
     newPartyInfo.forEach((person) => {
@@ -183,9 +172,10 @@ export const PartyContextProvider = ({ children }) => {
     percentPaid,
     countPercentFeedback,
     percentFeedback,
-    filterList,
     billListInfo,
     feedbackListInfo,
+    setBillListInfo,
+    setFeedbackListInfo,
     handleFeedback,
   };
 
