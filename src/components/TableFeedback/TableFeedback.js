@@ -47,7 +47,7 @@ export const TableFeedback = () => {
   return (
     <>
       <TableList>
-        {feedbackListInfo.map(({ name, isEatsPizza }, index) => (
+        {feedbackListInfo.map(({ name, isEatsPizza, isFeedback }, index) => (
           <Row
             onClick={handleClickOpen}
             color={
@@ -59,7 +59,7 @@ export const TableFeedback = () => {
             disabled={!isEatsPizza}
             key={name}
             id={index}
-            visibility={isEatsPizza && !localStorage.getItem(`${index}`) ? 'hidden' : false}
+            visibility={isEatsPizza && !isFeedback ? 'hidden' : false}
           />
         ))}
       </TableList>

@@ -1,11 +1,9 @@
 import React from 'react';
-
 import { PayButton } from './components/PayButton';
 import { usePartyContext } from '../contexts/PartyContext';
 import './index.css';
 
 export const Table = () => {
-  {/* prettier-ignore */}
   const { orderAmount, collectedMoney, moneyToCollect, billListInfo } = usePartyContext();
 
   const totalTable = billListInfo.map((person, index) => {
