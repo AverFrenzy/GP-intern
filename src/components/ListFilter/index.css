@@ -1,0 +1,12 @@
+.filter-list {
+    border: 1px black solid;
+    width: 35%;
+    margin: 10px auto;
+    height: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+.filter-list-item {
+    font-weight: bold;
+    height: 30px;
+}

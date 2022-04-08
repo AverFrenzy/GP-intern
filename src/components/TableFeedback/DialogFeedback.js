@@ -73,6 +73,12 @@ export const DialogFeedback = ({
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogTitle
           sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '20px 0',
+            width: '400px',
             fontWeight: 'bold',
             pl: '0',
             color: 'grey.700',
@@ -80,87 +86,96 @@ export const DialogFeedback = ({
           value={name}
         >
           {name}
-        </DialogTitle>
-        <Typography gutterBottom>{isLocal ? 'feedback' : 'Please, add your feedback'}</Typography>
-        <DialogContent dividers onClick={getStars} sx={{ pl: '0' }}>
-          {starLength.map((star, index) => (
-            <StarIcon
-              id={index}
-              key={index}
-              className="star"
-              sx={{
-                color: starId >= index ? '#ffc400' : '',
-                cursor: 'pointer',
-              }}
+          <Typography gutterBottom>{isLocal ? 'feedback' : 'Please, add your feedback'}</Typography>
+          <DialogContent dividers onClick={getStars} sx={{ pl: '0' }}>
+            {starLength.map((star, index) => (
+              <StarIcon
+                id={index}
+                key={index}
+                className="star"
+                sx={{
+                  color: starId >= index ? '#ffc400' : '',
+                  cursor: 'pointer',
+                }}
+              />
+            ))}
+          </DialogContent>
+          {!isLocal && <AddInputs />}
+          {isLocal && <Feedback comment={comment} phoneNumb={phoneNumb} />}
+          <Box>
+            <TextField
+              sx={{ width: '100%', display: `${display}` }}
+              id="filled-basic"
+              label="Phone number"
+              variant="filled"
+              color="success"
+              autoComplete="off"
+              {...register('phone', {
+                required: true,
+                minLength: 3,
+                maxLength: 10,
+                pattern: /^[0-9/+/(/)/ /]+$/i,
+              })}
             />
-          ))}
-        </DialogContent>
-        {!isLocal && <AddInputs />}
-        {isLocal && <Feedback comment={comment} phoneNumb={phoneNumb} />}
-        <Box>
-          <TextField
-            sx={{ width: '100%', display: `${display}` }}
-            id="filled-basic"
-            label="Phone number"
-            variant="filled"
-            color="success"
-            autoComplete="off"
-            {...register('phone', {
-              required: true,
-              minLength: 3,
-              maxLength: 10,
-              pattern: /^[0-9/+/(/)/ /]+$/i,
-            })}
-          />
-          {errors.phone && !isLocal && (
-            <p style={{ color: 'grey.600', pl: '25px' }}>
-              Please, use only +(), space, and numbers
-            </p>
-          )}
-          {!errors.phone && !isLocal && <p style={{ height: '16px' }}></p>}
-          <TextField
-            sx={{ width: '100%', display: `${display}` }}
-            id="outlined-multiline-static"
-            label="Comment"
-            multiline
-            rows={4}
-            variant="filled"
-            color="success"
-            {...register('comment', {
-              required: true,
-              minLength: 10,
-              maxLength: 100,
-            })}
-          />
-          {errors.comment && !isLocal && (
-            <p style={{ color: 'grey.600' }}>Please, add min: 10 letters, max: 100 letters</p>
-          )}
-          {!errors.comment && !isLocal && <p style={{ height: '16px' }}></p>}
-        </Box>
+            {errors.phone && !isLocal && (
+              <p style={{ fontSize: '14px', textAlign: 'center', color: 'grey.600', pl: '25px' }}>
+                Please, use only +(), space, and numbers
+              </p>
+            )}
+            {!errors.phone && !isLocal && <p style={{ height: '16px' }}></p>}
+            <TextField
+              sx={{ margin: '0 auto', width: '100%', minWidth: '340px', display: `${display}` }}
+              id="outlined-multiline-static"
+              label="Comment"
+              multiline
+              rows={4}
+              variant="filled"
+              color="success"
+              {...register('comment', {
+                required: true,
+                minLength: 10,
+                maxLength: 100,
+              })}
+            />
+            {errors.comment && !isLocal && (
+              <p style={{ fontSize: '14px', textAlign: 'center', color: 'grey.600' }}>
+                Please, add min: 10 letters, max: 100 letters
+              </p>
+            )}
+            {!errors.comment && !isLocal && <p style={{ height: '16px' }}></p>}
+          </Box>
 
-        <DialogActions sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
-          <Button
-            type="reset"
-            variant="contained"
-            autoFocus
-            color="error"
-            icon={<CloseIcon />}
-            onClick={handleClose}
+          <DialogActions
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-around',
+              width: '75%',
+              alignItems: 'center',
+            }}
           >
-            Close
-          </Button>
-          <Button
-            type="submit"
-            autoFocus
-            variant="contained"
-            color={isLocal ? 'error' : 'success'}
-            icon={isLocal ? <DeleteIcon /> : <SendIcon />}
-            onClick={deleteFeedback}
-            name={isLocal ? btnDelete : btnSave}
-          >
-            {isLocal ? btnDelete : btnSave}
-          </Button>
-        </DialogActions>
+            <Button
+              type="reset"
+              variant="contained"
+              autoFocus
+              color="error"
+              icon={<CloseIcon />}
+              onClick={handleClose}
+            >
+              Close
+            </Button>
+            <Button
+              type="submit"
+              autoFocus
+              variant="contained"
+              color={isLocal ? 'error' : 'success'}
+              icon={isLocal ? <DeleteIcon /> : <SendIcon />}
+              onClick={deleteFeedback}
+              name={isLocal ? btnDelete : btnSave}
+            >
+              {isLocal ? btnDelete : btnSave}
+            </Button>
+          </DialogActions>
+        </DialogTitle>
       </form>
     </Dialog>
   );

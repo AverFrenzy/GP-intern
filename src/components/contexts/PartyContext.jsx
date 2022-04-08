@@ -20,6 +20,8 @@ export const usePartyContext = () => useContext(PartyContext);
 
 export const PartyContextProvider = ({ children }) => {
   const [partyInfo, setPartyInfo] = useState([]);
+  const [billListInfo, setBillListInfo] = useState([]);
+  const [feedbackListInfo, setFeedbackListInfo] = useState([]);
   const [eatPizza, setEatPizza] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [moneyToCollect, setMoneyToCollect] = useState(0);
@@ -64,12 +66,15 @@ export const PartyContextProvider = ({ children }) => {
           isEatsPizza: person.eatsPizza,
           isPaid: false,
           isVegan: vegansList.includes(person.name),
+          isNotVegan: !vegansList.includes(person.name),
           shareToPay: person.eatsPizza
             ? pricesPerGuest.amountPerGuestPizzaAndCola
             : pricesPerGuest.amountPerGuestCola,
         };
       });
       setPartyInfo(totalPartyInfo);
+      setBillListInfo(totalPartyInfo);
+      setFeedbackListInfo(totalPartyInfo);
       const eatPizza = totalPartyInfo.filter((item) => item.isEatsPizza);
       setEatPizza(eatPizza);
     } catch (err) {
@@ -126,6 +131,17 @@ export const PartyContextProvider = ({ children }) => {
     };
   };
 
+  const filterList = (value, listName) => {
+    if (value === 'defaultValue') {
+      listName === 'billList' ? setBillListInfo(partyInfo) : null;
+      listName === 'feedbackList' ? setFeedbackListInfo(partyInfo) : null;
+    } else {
+      const filteredInfo = [...partyInfo].filter((item) => item[value]);
+      listName === 'billList' ? setBillListInfo(filteredInfo) : null;
+      listName === 'feedbackList' ? setFeedbackListInfo(filteredInfo) : null;
+    }
+  };
+
   const pay = (participantName) => {
     const newPartyInfo = [...partyInfo];
     newPartyInfo.forEach((person) => {
@@ -153,6 +169,9 @@ export const PartyContextProvider = ({ children }) => {
     percentPaid,
     countPercentFeedback,
     percentFeedback,
+    filterList,
+    billListInfo,
+    feedbackListInfo,
   };
 
   return <PartyContext.Provider value={value}>{children}</PartyContext.Provider>;

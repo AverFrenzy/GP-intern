@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const FeedbackTitle = styled.h6`
-  margin: 0;
+  margin: 20px;
+  width: 600px;
   font-size: 22px;
   font-weight: bold;
   padding: 7px 0 5px;
