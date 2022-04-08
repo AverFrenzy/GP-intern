@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const FeedbackTitle = styled.h6`
-  margin: 20px;
-  width: 600px;
   font-size: 22px;
   font-weight: bold;
   padding: 7px 0 5px;
@@ -17,5 +15,6 @@ export const FeedbackSubTitle = styled.p`
 `;
 
 export const FeedbackBox = styled.div`
-  padding: 25px 0;
+  width: 100%;
+  padding: 5px 30px 25px;
 `;

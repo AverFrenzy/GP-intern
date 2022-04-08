@@ -75,7 +75,7 @@ export const DialogFeedback = ({
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
+            justifyContent: 'start',
             alignItems: 'center',
             padding: '20px 0',
             width: '400px',
