@@ -159,14 +159,13 @@ export const PartyContextProvider = ({ children }) => {
   };
 
   const handleFeedback = (participantName, data) => {
-    const newPartyInfo = [...partyInfo];
-    newPartyInfo.forEach((person) => {
-      if (person.name === participantName) {
-        person.isFeedback = !person.isFeedback;
-        person.feedbackInf = data ? data : {};
+    for (let i = 0; i < partyInfo.length; i++) {
+      if (partyInfo[i].name === participantName) {
+        partyInfo[i].isFeedback = !partyInfo[i].isFeedback;
+        partyInfo[i].feedbackInf = data ? data : {};
+        break;
       }
-    });
-    setPartyInfo(newPartyInfo);
+    }
   };
 
   const value = {

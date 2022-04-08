@@ -1,32 +1,11 @@
 import React from 'react';
 import { Popover } from '@mui/material';
-import { MESSAGES } from '../constants';
-import { usePartyContext } from '../contexts/PartyContext';
 import { PopUpText } from './PopUp.styles';
+import { MESSAGES } from '../constants';
 
-export const PopUp = ({ anchorEl, handlePopoverClose, isOpenPopUp, tableName, nameUser }) => {
-  const { partyInfo } = usePartyContext();
+export const PopUp = ({ anchorEl, handlePopoverClose, isOpenPopUp, infObj }) => {
   const { order, feedback } = MESSAGES.popupText;
-
-  let text = '';
-
-  if (tableName === 'feedback') {
-    text = feedback.default;
-    partyInfo.forEach(({ name, isFeedback, feedbackInf }) => {
-      if (name === nameUser) {
-        isFeedback ? (text = `${feedbackInf.phone} ${feedbackInf.comment}`) : false;
-      }
-    });
-  }
-
-  if (tableName === 'order') {
-    text = order.default;
-    partyInfo.forEach(({ name, isPaid }) => {
-      if (name === nameUser) {
-        isPaid ? (text = 'Paid') : false;
-      }
-    });
-  }
+  const { isFeedback, isPaid, feedbackInf } = infObj;
 
   return (
     <Popover
@@ -47,7 +26,10 @@ export const PopUp = ({ anchorEl, handlePopoverClose, isOpenPopUp, tableName, na
       onClose={handlePopoverClose}
       disableRestoreFocus
     >
-      <PopUpText>{text}</PopUpText>
+      {!isFeedback && <PopUpText>{feedback.default}</PopUpText>}
+      {isFeedback && <PopUpText>{feedbackInf.comment}</PopUpText>}
+      {!isPaid && <PopUpText>{order.default}</PopUpText>}
+      {isPaid && <PopUpText>paid</PopUpText>}
     </Popover>
   );
 };

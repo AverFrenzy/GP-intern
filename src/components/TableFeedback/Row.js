@@ -3,8 +3,10 @@ import { ListItem, ListItemIcon, ListItemButton, ListItemText } from '@mui/mater
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ClearIcon from '@mui/icons-material/Clear';
 import { PopUp } from '../PopUp';
+import { usePartyContext } from '../contexts/PartyContext';
 
 export const Row = ({ color, disabled, visibility, name, onClick, id }) => {
+  const { partyInfo } = usePartyContext();
   const [anchorEl, setAnchorEl] = useState(null);
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.target);
@@ -13,6 +15,14 @@ export const Row = ({ color, disabled, visibility, name, onClick, id }) => {
     setAnchorEl(null);
   };
   const isOpenPopUp = !!anchorEl;
+
+  let infObj = {};
+  for (let i = 0; i < partyInfo.length; i++) {
+    if (partyInfo[i].name === name) {
+      infObj = partyInfo[i];
+      break;
+    }
+  }
 
   return (
     <ListItem disablePadding>
@@ -43,8 +53,7 @@ export const Row = ({ color, disabled, visibility, name, onClick, id }) => {
         isOpenPopUp={isOpenPopUp}
         anchorEl={anchorEl}
         handlePopoverClose={handlePopoverClose}
-        tableName={'feedback'}
-        nameUser={name}
+        infObj={infObj}
       />
     </ListItem>
   );

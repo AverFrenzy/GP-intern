@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { PayButton } from './components/PayButton';
 import { PopUp } from '../PopUp';
+import { usePartyContext } from '../contexts/PartyContext';
 
 export const TableRow = ({ name, isVegan, isPaid, shareToPay }) => {
+  const { partyInfo } = usePartyContext();
   const [anchorEl, setAnchorEl] = useState(null);
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.target);
@@ -11,6 +13,14 @@ export const TableRow = ({ name, isVegan, isPaid, shareToPay }) => {
     setAnchorEl(null);
   };
   const isOpenPopUp = !!anchorEl;
+
+  let infObj = {};
+  for (let i = 0; i < partyInfo.length; i++) {
+    if (partyInfo[i].name === name) {
+      infObj = partyInfo[i];
+      break;
+    }
+  }
 
   return (
     <>
@@ -33,8 +43,7 @@ export const TableRow = ({ name, isVegan, isPaid, shareToPay }) => {
         isOpenPopUp={isOpenPopUp}
         anchorEl={anchorEl}
         handlePopoverClose={handlePopoverClose}
-        tableName={'order'}
-        nameUser={name}
+        infObj={infObj}
       />
     </>
   );
