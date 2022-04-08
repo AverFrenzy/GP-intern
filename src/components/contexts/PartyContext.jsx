@@ -71,6 +71,9 @@ export const PartyContextProvider = ({ children }) => {
           shareToPay: person.eatsPizza
             ? pricesPerGuest.amountPerGuestPizzaAndCola
             : pricesPerGuest.amountPerGuestCola,
+          toPay: person.eatsPizza
+            ? pricesPerGuest.amountPerGuestPizzaAndCola
+            : pricesPerGuest.amountPerGuestCola,
         };
       });
       setPartyInfo(totalPartyInfo);
