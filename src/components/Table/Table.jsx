@@ -1,11 +1,14 @@
+import React from 'react';
+
 import { PayButton } from './components/PayButton';
 import { usePartyContext } from '../contexts/PartyContext';
 import './index.css';
 
 export const Table = () => {
-  const { orderAmount, collectedMoney, moneyToCollect, partyInfo } = usePartyContext();
+  {/* prettier-ignore */}
+  const { orderAmount, collectedMoney, moneyToCollect, billListInfo } = usePartyContext();
 
-  const totalTable = partyInfo.map((person, index) => {
+  const totalTable = billListInfo.map((person, index) => {
     return (
       <tr key={index + 'table row'}>
         <td className={person.isVegan ? 'vegan-text' : null} key={index + 'name'}>

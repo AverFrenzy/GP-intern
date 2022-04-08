@@ -6,10 +6,12 @@
 }
 .dashboard-item {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   width: 37.5%;
   height: 100%;
 }
+
 .dashboard-item:last-child {
   position: sticky;
   top: 0;
