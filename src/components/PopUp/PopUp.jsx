@@ -19,6 +19,15 @@ export const PopUp = ({ anchorEl, handlePopoverClose, isOpenPopUp, tableName, na
     });
   }
 
+  if (tableName === 'order') {
+    text = order.default;
+    partyInfo.forEach(({ name, isPaid }) => {
+      if (name === nameUser) {
+        isPaid ? (text = 'Paid') : false;
+      }
+    });
+  }
+
   return (
     <Popover
       id="mouse-over-popover"
