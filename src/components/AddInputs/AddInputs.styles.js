@@ -9,7 +9,7 @@ export const AddInpBlock = styled.div`
 `;
 
 export const InputsList = styled.ul`
-  padding: 0 30px;
+  padding: 0;
   width: 100%;
   list-style-type: none;
   li {

@@ -15,3 +15,12 @@ export const TableList = styled.ul`
   border: 1px solid #616161;
   border-radius: 2px;
 `;
+
+export const FormFeedback = styled.form`
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  min-width: 360px;
+`;

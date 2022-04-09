@@ -30,7 +30,7 @@ export const PopUp = ({ anchorEl, handlePopoverClose, isOpenPopUp, infObj }) => 
         {!isFeedback && <PopUpText>{feedback.default}</PopUpText>}
         {isFeedback && (
           <>
-            <PopUpRating name="read-only" value={+feedbackInf.stars + 1} readOnly />
+            <PopUpRating name="read-only" value={+feedbackInf.stars} readOnly />
             <Feedback comment={feedbackInf.comment} phoneNumb={feedbackInf.phone} />
           </>
         )}

@@ -1,10 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TableRow } from './TableRow';
+import { PopUp } from '../PopUp';
 import { usePartyContext } from '../contexts/PartyContext';
 import './index.css';
 
 export const Table = () => {
-  const { orderAmount, collectedMoney, moneyToCollect, billListInfo } = usePartyContext();
+  const { orderAmount, collectedMoney, moneyToCollect, billListInfo, partyInfo } =
+    usePartyContext();
+  const [userId, setUserId] = useState();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.target);
+    setUserId(event.target.closest('.row').dataset.name);
+  };
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+  const isOpenPopUp = !!anchorEl;
+
+  let infObj = {};
+  for (let i = 0; i < partyInfo.length; i++) {
+    if (partyInfo[i].name === userId) {
+      infObj = partyInfo[i];
+      break;
+    }
+  }
 
   const totalTable = billListInfo.map(({ name, isVegan, isPaid, shareToPay }, index) => {
     return (
@@ -14,6 +34,9 @@ export const Table = () => {
         isVegan={isVegan}
         isPaid={isPaid}
         shareToPay={shareToPay}
+        isOpenPopUp={isOpenPopUp}
+        handlePopoverOpen={handlePopoverOpen}
+        handlePopoverClose={handlePopoverClose}
       />
     );
   });
@@ -44,6 +67,12 @@ export const Table = () => {
           } BYN`}</td>
         </tr>
       </tbody>
+      <PopUp
+        isOpenPopUp={isOpenPopUp}
+        anchorEl={anchorEl}
+        handlePopoverClose={handlePopoverClose}
+        infObj={infObj}
+      />
     </table>
   );
 };
