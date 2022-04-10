@@ -20,8 +20,6 @@ export const usePartyContext = () => useContext(PartyContext);
 
 export const PartyContextProvider = ({ children }) => {
   const [partyInfo, setPartyInfo] = useState([]);
-  const [billListInfo, setBillListInfo] = useState([]);
-  const [feedbackListInfo, setFeedbackListInfo] = useState([]);
   const [eatPizza, setEatPizza] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [moneyToCollect, setMoneyToCollect] = useState(0);
@@ -29,6 +27,26 @@ export const PartyContextProvider = ({ children }) => {
   const [collectedMoney, setCollectedMoney] = useState(0);
   const [percentPaid, setPercentPaid] = useState(0);
   const [percentFeedback, setPercentFeedback] = useState(0);
+  const [billFilterQuery, setBillFilterQuery] = useState('');
+  const [feedbackFilterQuery, setFeedbackFilterQuery] = useState('');
+
+  const getFilteredList = (filterValue) => {
+    if (filterValue) {
+      return partyInfo.filter((item) => item[filterValue]);
+    }
+    return partyInfo;
+  };
+
+  const setBillFilter = (queryValue) => {
+    setBillFilterQuery(queryValue);
+  };
+
+  const setFeedbackFilter = (queryValue) => {
+    setFeedbackFilterQuery(queryValue);
+  };
+
+  const filteredBillList = getFilteredList(billFilterQuery);
+  const filteredFeedBackList = getFilteredList(feedbackFilterQuery);
 
   const countPercentFeedback = (countFeedback) => {
     const percent = (countFeedback * 100) / eatPizza.length;
@@ -77,8 +95,6 @@ export const PartyContextProvider = ({ children }) => {
         };
       });
       setPartyInfo(totalPartyInfo);
-      setBillListInfo(totalPartyInfo);
-      setFeedbackListInfo(totalPartyInfo);
       const eatPizza = totalPartyInfo.filter((item) => item.isEatsPizza);
       setEatPizza(eatPizza);
     } catch (err) {
@@ -135,37 +151,25 @@ export const PartyContextProvider = ({ children }) => {
     };
   };
 
-  const filterList = (value, listName) => {
-    if (value === 'defaultValue') {
-      listName === 'billList' ? setBillListInfo(partyInfo) : null;
-      listName === 'feedbackList' ? setFeedbackListInfo(partyInfo) : null;
-    } else {
-      const filteredInfo = [...partyInfo].filter((item) => item[value]);
-      listName === 'billList' ? setBillListInfo(filteredInfo) : null;
-      listName === 'feedbackList' ? setFeedbackListInfo(filteredInfo) : null;
-    }
-  };
-
   const pay = (participantName) => {
-    const newPartyInfo = [...partyInfo];
-    newPartyInfo.forEach((person) => {
-      if (person.name === participantName) {
-        const updatedMoneySum = collectedMoney + person.shareToPay;
-        person.isPaid = true;
-        setCollectedMoney(updatedMoneySum);
-        setMoneyToCollect(moneyToCollect - person.shareToPay);
-        person.shareToPay = 0;
-        countPercent(updatedMoneySum);
-      }
-    });
-    setPartyInfo(newPartyInfo);
+    const copyPartyInfo = JSON.parse(JSON.stringify(partyInfo));
+    const indexOfPersonPaid = copyPartyInfo.findIndex((person) => person.name === participantName);
+    const updatedMoneySum = collectedMoney + copyPartyInfo[indexOfPersonPaid].shareToPay;
+    copyPartyInfo[indexOfPersonPaid].isPaid = true;
+    setCollectedMoney(updatedMoneySum);
+    setMoneyToCollect(moneyToCollect - copyPartyInfo[indexOfPersonPaid].shareToPay);
+    copyPartyInfo[indexOfPersonPaid].shareToPay = 0;
+    countPercent(updatedMoneySum);
+    setPartyInfo(copyPartyInfo);
   };
 
   const handleFeedback = (participantName, data) => {
-    for (let i = 0; i < partyInfo.length; i++) {
-      if (partyInfo[i].name === participantName) {
-        partyInfo[i].isFeedback = !partyInfo[i].isFeedback;
-        partyInfo[i].feedbackInf = data ? data : {};
+    const copyPartyInfo = JSON.parse(JSON.stringify(partyInfo));
+    for (let i = 0; i < copyPartyInfo.length; i++) {
+      if (copyPartyInfo[i].name === participantName) {
+        copyPartyInfo[i].isFeedback = !copyPartyInfo[i].isFeedback;
+        copyPartyInfo[i].feedbackInf = data ? data : {};
+        setPartyInfo(copyPartyInfo);
         break;
       }
     }
@@ -183,10 +187,11 @@ export const PartyContextProvider = ({ children }) => {
     percentPaid,
     countPercentFeedback,
     percentFeedback,
-    filterList,
-    billListInfo,
-    feedbackListInfo,
     handleFeedback,
+    filteredBillList,
+    filteredFeedBackList,
+    setBillFilter,
+    setFeedbackFilter,
   };
 
   return <PartyContext.Provider value={value}>{children}</PartyContext.Provider>;
