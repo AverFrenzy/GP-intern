@@ -5,7 +5,7 @@ import { usePartyContext } from '../contexts/PartyContext';
 import { TableList } from './Table.styles';
 
 export const TableFeedback = () => {
-  const { countPercentFeedback, feedbackListInfo } = usePartyContext();
+  const { countPercentFeedback, filteredFeedBackList } = usePartyContext();
 
   const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState();
@@ -47,11 +47,11 @@ export const TableFeedback = () => {
   return (
     <>
       <TableList>
-        {feedbackListInfo.map(({ name, isEatsPizza, isFeedback }, index) => (
+        {filteredFeedBackList.map(({ name, isEatsPizza, isFeedback }, index) => (
           <Row
             onClick={handleClickOpen}
             color={
-              feedbackListInfo[index].isVegan && feedbackListInfo[index].isEatsPizza
+              filteredFeedBackList[index].isVegan && filteredFeedBackList[index].isEatsPizza
                 ? 'green'
                 : 'grey.800'
             }
@@ -66,7 +66,7 @@ export const TableFeedback = () => {
       <DialogFeedback
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        name={id ? feedbackListInfo[id].name : ''}
+        name={id ? filteredFeedBackList[id].name : ''}
         nameId={id}
         starId={starId}
         getStars={getStars}
