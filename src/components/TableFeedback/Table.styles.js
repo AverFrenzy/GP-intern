@@ -24,3 +24,10 @@ export const FormFeedback = styled.form`
   align-items: center;
   min-width: 360px;
 `;
+
+export const ErrorText = styled.p`
+  font-size: 14px;
+  color: red;
+  padding: 8px 0;
+  min-height: 32px;
+`;

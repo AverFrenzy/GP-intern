@@ -4,7 +4,7 @@ import { Feedback } from '../Feedback';
 import { PopUpText, PopUpRating, PopUpBox, PopUpDivider, PopUpTitle } from './PopUp.styles';
 
 export const PopUp = ({ anchorEl, handlePopoverClose, isOpenPopUp, infObj }) => {
-  const { order, feedback } = MESSAGES.popupText;
+  const { order, feedback, title, currency } = MESSAGES.popupText;
   const { isFeedback, isPaid, feedbackInf, toPay } = infObj;
 
   return (
@@ -30,7 +30,7 @@ export const PopUp = ({ anchorEl, handlePopoverClose, isOpenPopUp, infObj }) => 
         {!isFeedback && <PopUpText>{feedback.default}</PopUpText>}
         {isFeedback && (
           <>
-            <PopUpRating name="read-only" value={+feedbackInf.stars} readOnly />
+            <PopUpRating name="read-only" value={Number(feedbackInf.stars)} readOnly />
             <Feedback comment={feedbackInf.comment} phoneNumb={feedbackInf.phone} />
           </>
         )}
@@ -38,8 +38,11 @@ export const PopUp = ({ anchorEl, handlePopoverClose, isOpenPopUp, infObj }) => 
         {!isPaid && <PopUpText>{order.default}</PopUpText>}
         {isPaid && (
           <>
-            <PopUpTitle>Paid</PopUpTitle>
-            <PopUpText>{toPay.toFixed(1)} BYN</PopUpText>
+            <PopUpTitle>{title}</PopUpTitle>
+            <PopUpText>
+              {toPay.toFixed(1)}
+              {currency}
+            </PopUpText>
           </>
         )}
       </PopUpBox>

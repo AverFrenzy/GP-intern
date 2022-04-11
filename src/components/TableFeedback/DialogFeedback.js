@@ -8,12 +8,14 @@ import { AddInputs } from '../AddInputs';
 import { Feedback } from '../Feedback';
 import { MESSAGES } from '../constants';
 import { usePartyContext } from '../contexts/PartyContext';
-import { TableTitle, FormFeedback } from './Table.styles';
+import { TableTitle, FormFeedback, ErrorText } from './Table.styles';
 
 export const DialogFeedback = ({ isOpen, setIsOpen, setCountFeedback, infObj }) => {
   const { isFeedback, feedbackInf, name } = infObj;
   const { handleFeedback } = usePartyContext();
-  const { btnDelete, btnSave } = MESSAGES.dialogFeedback.buttons;
+  const { phone, textField } = MESSAGES.dialogFeedback.errorText;
+  const { btnDelete, btnSave, btnClose } = MESSAGES.dialogFeedback.buttons;
+  const { feedback, defaultFeedback } = MESSAGES.dialogFeedback.title;
   const [stars, setStars] = useState(3);
 
   const {
@@ -58,13 +60,11 @@ export const DialogFeedback = ({ isOpen, setIsOpen, setCountFeedback, infObj }) 
     <Dialog open={isOpen}>
       <FormFeedback onSubmit={handleSubmit(onSubmit)}>
         <TableTitle>{name}</TableTitle>
-        <Typography gutterBottom>
-          {isFeedback ? 'feedback' : 'Please, add your feedback'}
-        </Typography>
+        <Typography>{isFeedback ? feedback : defaultFeedback}</Typography>
         <Rating
           name="simple-controlled"
-          value={!isFeedback ? stars : +feedbackInf.stars}
-          onChange={(event, newValue) => {
+          value={!isFeedback ? stars : Number(feedbackInf.stars)}
+          onChange={(e, newValue) => {
             setStars(newValue);
           }}
           readOnly={isFeedback}
@@ -88,12 +88,8 @@ export const DialogFeedback = ({ isOpen, setIsOpen, setCountFeedback, infObj }) 
                 pattern: /^[0-9/+/(/)/ /]+$/i,
               })}
             />
-            {errors.phone && (
-              <p style={{ fontSize: '14px', textAlign: 'center', color: 'grey.600', pl: '25px' }}>
-                Please, use only +(), space, and numbers
-              </p>
-            )}
-            {!errors.phone && <p style={{ height: '16px' }}></p>}
+            {errors.phone && <ErrorText>{phone}</ErrorText>}
+            {!errors.phone && <ErrorText />}
             <TextField
               sx={{ margin: '0 auto', width: '100%', minWidth: '340px' }}
               id="outlined-multiline-static"
@@ -108,12 +104,8 @@ export const DialogFeedback = ({ isOpen, setIsOpen, setCountFeedback, infObj }) 
                 maxLength: 100,
               })}
             />
-            {errors.comment && (
-              <p style={{ fontSize: '14px', textAlign: 'center', color: 'grey.600' }}>
-                Please, add min: 10 letters, max: 100 letters
-              </p>
-            )}
-            {!errors.comment && <p style={{ height: '16px' }}></p>}
+            {errors.comment && <ErrorText>{textField}</ErrorText>}
+            {!errors.comment && <ErrorText />}
           </Box>
         )}
 
@@ -133,7 +125,7 @@ export const DialogFeedback = ({ isOpen, setIsOpen, setCountFeedback, infObj }) 
             icon={<CloseIcon />}
             onClick={handleClose}
           >
-            Close
+            {btnClose}
           </Button>
           <Button
             type="submit"
