@@ -1,15 +1,15 @@
-import { GET_PARTY_INFO } from '../constants';
+import { SET_PARTY_LIST } from '../constants';
 
 const initialState = {
-  partyInfo: [],
+  partyList: [],
 };
 
 export const listState = (state = initialState, action) => {
   switch (action.type) {
-    case GET_PARTY_INFO: {
+    case SET_PARTY_LIST: {
       return {
         ...state,
-        partyInfo: [...action.payload],
+        partyList: [...action.payload],
       };
     }
     default:
