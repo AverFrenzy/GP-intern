@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { getPartyInfo } from '../../store/actions';
 
 import {
   getColaInfo,
@@ -30,6 +32,8 @@ export const PartyContextProvider = ({ children }) => {
   const [billFilterQuery, setBillFilterQuery] = useState('');
   const [feedbackFilterQuery, setFeedbackFilterQuery] = useState('');
 
+  const dispatch = useDispatch();
+
   const getFilteredList = (filterValue) => {
     if (filterValue) {
       return partyInfo.filter((item) => item[filterValue]);
@@ -59,6 +63,7 @@ export const PartyContextProvider = ({ children }) => {
 
     try {
       const participantsData = await getParticipantsInfo();
+      console.log(participantsData.party);
       const dietData = await getDietsInfo(participantsData.party.map((person) => person.name));
       const vegansList = dietData.diet
         .filter((person) => person.isVegan)
@@ -97,6 +102,8 @@ export const PartyContextProvider = ({ children }) => {
       setPartyInfo(totalPartyInfo);
       const eatPizza = totalPartyInfo.filter((item) => item.isEatsPizza);
       setEatPizza(eatPizza);
+
+      dispatch(getPartyInfo(totalPartyInfo));
     } catch (err) {
       console.log(err);
     } finally {
