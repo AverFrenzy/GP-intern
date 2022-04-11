@@ -5,7 +5,7 @@ import { usePartyContext } from '../contexts/PartyContext';
 import './index.css';
 
 export const Table = () => {
-  const { orderAmount, collectedMoney, moneyToCollect, billListInfo, partyInfo } =
+  const { orderAmount, collectedMoney, moneyToCollect, filteredBillList, partyInfo } =
     usePartyContext();
   const [userId, setUserId] = useState();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -26,7 +26,7 @@ export const Table = () => {
     }
   }
 
-  const totalTable = billListInfo.map(({ name, isVegan, isPaid, shareToPay }, index) => {
+  const totalTable = filteredBillList.map(({ name, isVegan, isPaid, shareToPay }, index) => {
     return (
       <TableRow
         key={index + 'table row'}

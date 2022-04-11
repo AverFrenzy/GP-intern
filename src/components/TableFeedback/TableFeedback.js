@@ -6,8 +6,7 @@ import { usePartyContext } from '../contexts/PartyContext';
 import { TableList } from './Table.styles';
 
 export const TableFeedback = () => {
-  const { countPercentFeedback, feedbackListInfo, partyInfo } = usePartyContext();
-
+  const { countPercentFeedback, filteredFeedBackList, partyInfo } = usePartyContext();
   const [isOpen, setIsOpen] = useState(false);
   const [countFeedback, setCountFeedback] = useState(0);
   const [userId, setUserId] = useState();
@@ -16,7 +15,7 @@ export const TableFeedback = () => {
     countPercentFeedback(countFeedback);
   }, [countFeedback, countPercentFeedback]);
 
-  const handleClickOpen = (e) => {
+  const handleClickOpen = () => {
     setIsOpen(true);
   };
 
@@ -41,7 +40,7 @@ export const TableFeedback = () => {
   return (
     <>
       <TableList>
-        {feedbackListInfo.map((item) => (
+        {filteredFeedBackList.map((item) => (
           <Row
             onClick={handleClickOpen}
             key={item.name}

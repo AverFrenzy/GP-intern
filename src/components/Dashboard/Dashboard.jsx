@@ -4,7 +4,7 @@ import { usePartyContext } from '../contexts/PartyContext';
 
 import { Table } from '../Table';
 import { Pizza } from '../Pizza';
-import ListFilter from '../ListFilter/ListFilter';
+import { ListFilter } from '../ListFilter';
 import { TableFeedback } from '../TableFeedback';
 import { PercentWidget } from '../PercentWidget';
 
@@ -24,16 +24,16 @@ const FEEDBACK_OPTIONS = [
 ];
 
 export const Dashboard = () => {
-  const { percentPaid, percentFeedback } = usePartyContext();
+  const { percentPaid, percentFeedback, setBillFilter, setFeedbackFilter } = usePartyContext();
 
   return (
     <div className="dashboard-container">
       <div className="dashboard-item">
-        <ListFilter options={BILL_OPTIONS} listName={'billList'} />
+        <ListFilter options={BILL_OPTIONS} setFilterQuery={setBillFilter} />
         <Table />
       </div>
       <div className="dashboard-item">
-        <ListFilter options={FEEDBACK_OPTIONS} listName={'feedbackList'} />
+        <ListFilter options={FEEDBACK_OPTIONS} setFilterQuery={setFeedbackFilter} />
         <TableFeedback />
       </div>
       <div className="dashboard-item">
