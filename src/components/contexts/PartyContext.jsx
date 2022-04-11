@@ -153,14 +153,16 @@ export const PartyContextProvider = ({ children }) => {
 
   const pay = (participantName) => {
     const copyPartyInfo = JSON.parse(JSON.stringify(partyInfo));
-    const indexOfPersonPaid = copyPartyInfo.findIndex((person) => person.name === participantName);
-    const updatedMoneySum = collectedMoney + copyPartyInfo[indexOfPersonPaid].shareToPay;
-    copyPartyInfo[indexOfPersonPaid].isPaid = true;
-    setCollectedMoney(updatedMoneySum);
-    setMoneyToCollect(moneyToCollect - copyPartyInfo[indexOfPersonPaid].shareToPay);
-    copyPartyInfo[indexOfPersonPaid].shareToPay = 0;
-    countPercent(updatedMoneySum);
-    setPartyInfo(copyPartyInfo);
+    const index = copyPartyInfo.findIndex((person) => person.name === participantName);
+    if (~index) {
+      const updatedMoneySum = collectedMoney + copyPartyInfo[index].shareToPay;
+      copyPartyInfo[index].isPaid = true;
+      setCollectedMoney(updatedMoneySum);
+      setMoneyToCollect(moneyToCollect - copyPartyInfo[index].shareToPay);
+      copyPartyInfo[index].shareToPay = 0;
+      countPercent(updatedMoneySum);
+      setPartyInfo(copyPartyInfo);
+    }
   };
 
   const handleFeedback = (participantName, data) => {
