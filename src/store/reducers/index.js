@@ -1,8 +1,9 @@
-import { SET_PARTY_LIST, SET_VEGANS_BOOK } from '../constants';
+import { SET_PARTY_LIST, SET_VEGANS_BOOK, SET_ORDER_INFO } from '../constants';
 
 const initialState = {
   partyList: [],
-  veganBook: [],
+  dietBook: [],
+  orderInfo: [],
 };
 
 export const listState = (state = initialState, action) => {
@@ -16,7 +17,13 @@ export const listState = (state = initialState, action) => {
     case SET_VEGANS_BOOK: {
       return {
         ...state,
-        veganBook: [...action.payload],
+        dietBook: [...action.payload],
+      };
+    }
+    case SET_ORDER_INFO: {
+      return {
+        ...state,
+        orderInfo: [...action.payload],
       };
     }
     default:
