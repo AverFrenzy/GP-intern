@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import './index.css';
+import { Provider } from 'react-redux';
+import store from './store';
 import App from './App';
 import { PartyContextProvider } from './components/contexts/PartyContext';
+import './index.css';
 
 ReactDOM.render(
-  <PartyContextProvider>
-    <App />
-  </PartyContextProvider>,
+  <Provider store={store}>
+    <PartyContextProvider>
+      <App />
+    </PartyContextProvider>
+  </Provider>,
   document.getElementById('root')
 );
