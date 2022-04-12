@@ -1,0 +1,5 @@
+export const SET_PARTICIPANTS = 'SET_PARTICIPANTS';
+export const SET_DIETS = 'SET_DIETS';
+export const SET_PIZZA_INFO = 'SET_PIZZA_INFO';
+export const SET_COLA_INFO = 'SET_COLA_INFO';
+export const SET_CURRENCY_INFO = 'SET_CURRENCY_INFO';

@@ -1,3 +1,11 @@
+import {
+  SET_COLA_INFO,
+  SET_CURRENCY_INFO,
+  SET_DIETS,
+  SET_PARTICIPANTS,
+  SET_PIZZA_INFO,
+} from '../constants';
+
 const defaultStore = {
   participantsData: [],
   dietsData: [],
@@ -8,31 +16,31 @@ const defaultStore = {
 
 export default function reducer(state = defaultStore, action) {
   switch (action.type) {
-    case 'SET_PARTICIPANTS': {
+    case SET_PARTICIPANTS: {
       return {
         ...state,
         participantsData: action.payload,
       };
     }
-    case 'SET_DIETS': {
+    case SET_DIETS: {
       return {
         ...state,
         dietsData: action.payload,
       };
     }
-    case 'SET_PIZZA_INFO': {
+    case SET_PIZZA_INFO: {
       return {
         ...state,
         pizzaInfo: action.payload,
       };
     }
-    case 'SET_COLA_INFO': {
+    case SET_COLA_INFO: {
       return {
         ...state,
         colaInfo: action.payload,
       };
     }
-    case 'SET_CURRENCY_INFO': {
+    case SET_CURRENCY_INFO: {
       return {
         ...state,
         currencyInfo: action.payload,
